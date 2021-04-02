@@ -28,7 +28,9 @@ jobs:
         dotnet restore
 
     - name: Build
-      run: dotnet build --no-restore Release
+      run: |
+        ls 
+        dotnet build --no-restore Release
       
       
     - name: Publish
