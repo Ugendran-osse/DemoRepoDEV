@@ -28,7 +28,7 @@ jobs:
 
     - name: Build
       run: dotnet build --no-restore Release
-      working-directory: ./API/APIProject
+      
       
     - name: Publish
       run: dotnet publish --configuration Release --no-build Release -output ${{ env.WEBAPP_PACKAGE_PATH }} 
