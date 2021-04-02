@@ -31,7 +31,7 @@ jobs:
       run: |
         cd OsseAPIApp
         ls 
-        dotnet build APIProject.sln --no-restore Release
+        dotnet build --no-restore Release
       
       
     - name: Publish
