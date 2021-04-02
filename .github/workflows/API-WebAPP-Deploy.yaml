@@ -30,7 +30,7 @@ jobs:
     - name: Build
       run: |
         ls 
-        dotnet build --configuration --no-restore Release
+        dotnet build  --no-restore --configuration Release
       
       
     - name: Publish
