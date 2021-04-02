@@ -29,7 +29,6 @@ jobs:
 
     - name: Build
       run: |
-        cd OsseAPIApp
         ls 
         dotnet build --no-restore Release
       
