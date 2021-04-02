@@ -29,6 +29,7 @@ jobs:
 
     - name: Build
       run: |
+        cd OsseAPIApp
         ls 
         dotnet build APIProject.sln --no-restore Release
       
