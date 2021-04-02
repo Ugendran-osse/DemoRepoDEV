@@ -1,43 +1,39 @@
 name: Deploy .NET API App to Azure Web App
 
-name: Deploy .NET App to Azure Web App
-
-on:
-  push:
-    branches:
-      - master
-  pull_request:
-    branches:
-      - '*'
+on: [push, workflow_dispatch]
+  
 env:
-  WEBAPP_NAME: sample-net-app-kasun    # Azure Web App Name
-  WEBAPP_PACKAGE_PATH: '.'      # Project Path Location default to root(.)
-  NUGET_VERSION: '5.3.1'           # dot net version to use
+  WEBAPP_NAME: app-api-osse-prd    # Azure Web App Name
+  WEBAPP_PACKAGE_PATH: './publish'      # Project Path Location default to root(.)
+  NETCORE_VERSION: "3.1.103"        # dot net core version
 
 jobs:
   build-and-deploy:
+    name: Build and Deploy
     runs-on: windows-latest
-    steps:
-
-    # checkout the repo
-    - uses: actions/checkout@master  
-    
-    - name: Install Nuget
-      uses: nuget/setup-nuget@v1
-      with:
-        nuget-version: ${{ env.NUGET_VERSION}}
-    - name: NuGet to restore dependencies 
-      run: nuget restore
+    defaults:
+      run:
+        working-directory: ./API
   
-    - name: Add msbuild to PATH
-      uses: microsoft/setup-msbuild@v1.0.0
+    steps:
+  # checkout the repo
+    - uses: actions/checkout@master  
+    - name: Set up dotnet Core ${{ env.NETCORE_VERSION }}
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: ${{ env.NETCORE_VERSION }}
+      
+    - name: Restore package
+      run: dotnet restore
 
-    - name: Run MSBuild
-      run: msbuild .\SampleWebApplication.sln
-       
-    - name: 'Run Azure webapp deploy action using publish profile credentials'
+    - name: Build
+      run: dotnet build --no-restore Release
+    - name: Publish
+      run: dotnet publish --configuration Release --no-build Release -output ${{ env.WEBAPP_PACKAGE_PATH }} 
+
+    - name: 'Deploy to Azure App Service [WEBAPP]'
       uses: azure/webapps-deploy@v2
       with: 
         app-name: ${{ env.WEBAPP_NAME }} 
-        publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE  }} 
-        package: '${{ env.WEBAPP_PACKAGE_PATH }}/SampleWebApplication/'
+        publish-profile: ${{ secrets.APP_API_PROFILE  }} 
+        package: '${{ env.WEBAPP_PACKAGE_PATH }}'
