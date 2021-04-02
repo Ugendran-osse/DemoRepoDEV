@@ -39,6 +39,13 @@ jobs:
         ls
         dotnet publish --no-build --configuration Release --output ${{ env.WEBAPP_OUTPUT_PATH }} 
 
+    - name: Publish Artifacts of ${{ WEBAPP_NAME }}
+      uses: actions/upload-artifact@v1.0.0
+      with: 
+        name: webapp
+        path: ${{ env.WEBAPP_PACKAGE_PATH }}
+      
+        
     - name: 'Deploy to Azure App Service [WEBAPP]'
       uses: azure/webapps-deploy@v2
       with: 
