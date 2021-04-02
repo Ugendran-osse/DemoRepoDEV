@@ -25,6 +25,7 @@ jobs:
       
     - name: Restore package
       run: dotnet restore
+      working-directory: ./API/APIProject
 
     - name: Build
       run: dotnet build --no-restore Release
