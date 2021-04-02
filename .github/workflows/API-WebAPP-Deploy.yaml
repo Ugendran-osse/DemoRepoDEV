@@ -34,7 +34,7 @@ jobs:
       
       
     - name: Publish
-      run: dotnet publish --configuration Release --no-build Release -output ${{ env.WEBAPP_PACKAGE_PATH }} 
+      run: dotnet publish --no-build --configuration Release -output ${{ env.WEBAPP_PACKAGE_PATH }} 
 
     - name: 'Deploy to Azure App Service [WEBAPP]'
       uses: azure/webapps-deploy@v2
