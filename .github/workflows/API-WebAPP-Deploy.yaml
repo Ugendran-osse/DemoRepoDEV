@@ -14,7 +14,6 @@ jobs:
     defaults:
       run:
         working-directory: ./API/APIProject
-  
     steps:
   # checkout the repo
     - uses: actions/checkout@master  
@@ -24,7 +23,9 @@ jobs:
         dotnet-version: ${{ env.NETCORE_VERSION }}
       
     - name: Restore package
-      run: dotnet restore
+      run: |
+        ls API
+        dotnet restore
 
     - name: Build
       run: dotnet build --no-restore Release
