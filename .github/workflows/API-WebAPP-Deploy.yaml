@@ -30,7 +30,7 @@ jobs:
     - name: Build
       run: |
         ls 
-        dotnet build --no-restore Release
+        dotnet build APIProject.sln --no-restore Release
       
       
     - name: Publish
