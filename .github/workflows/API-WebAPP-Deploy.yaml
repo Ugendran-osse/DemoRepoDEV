@@ -1,6 +1,12 @@
 name: Deploy .NET API App to Azure Web App
 
-on: [push, workflow_dispatch]
+on:
+  push:
+    branches:
+      - main
+    paths:
+    - 'API/APIProject/OsseAPIApp/**'
+  workflow_dispatch:
   
 env:
   WEBAPP_NAME: app-api-osse-prd    # Azure Web App Name
