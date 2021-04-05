@@ -19,15 +19,14 @@ env:
   
   
 jobs:
-  build:
+  build-and-deploy:
+    name: Build and Deploy
     runs-on: windows-latest
     defaults:
       run:
-        working-directory: ./UI/UIApp/OsseUIApp  #Example: ./API/APIProject
-        
+        working-directory: ./UI/UIApp/OsseUIApp
     steps:
       - uses: actions/checkout@v2
-
       - name: Set up Node.js version
         uses: actions/setup-node@v1
         with:
