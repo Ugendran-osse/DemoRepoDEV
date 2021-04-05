@@ -7,15 +7,13 @@ on:
   push:
     branches:
       - main
-    paths:
-    - 'UI/UIApp/OsseUIApp/**'  # This is used to trigged the event only when there is any change to the given path in the repo. Example: 
   workflow_dispatch:
 
 env:
   WEBAPP_NAME: app-osse-cio-datacatalog-ui    # Azure Web App Name. Example: app-api-osse-prd
   WEBAPP_PACKAGE_PATH: './UI/UIApp/publish'      # Project Path Location default to root(.). Example: ./API/APIProject/publish
   WEBAPP_OUTPUT_PATH: './publish'      # Project Path Location default to root(.). Example: ./publish
-  NODE_VERSION: "14.x"        # Node version. Example: 14.x
+  NODE_VERSION: '14.x'        # Node version. Example: 14.x
   
   
 jobs:
@@ -34,11 +32,9 @@ jobs:
 
       - name: npm install, build, and test
         run: |
+          echo hellooooooooooooo
           ls
           cd ui/uiapp/osseuiapp
-          npm install
-          ng build --prod 
-          npm run test --if-present
       
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
