@@ -34,5 +34,6 @@ jobs:
         run: |
           echo hellooooooooooooo
           ls
-          cd ui/uiapp/osseuiapp
-          ls
+          npm install
+          ng build --prod 
+          npm run test --if-present          
