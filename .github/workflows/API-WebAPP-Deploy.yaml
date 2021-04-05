@@ -1,0 +1,60 @@
+name: Deploy .NET API App to Azure Web App
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+    - 'API/APIProject/OsseAPIApp/**'
+  workflow_dispatch:
+  
+env:
+  WEBAPP_NAME: app-api-osse-prd    # Azure Web App Name
+  WEBAPP_PACKAGE_PATH: './API/APIProject/publish'      # Project Path Location default to root(.)
+  WEBAPP_OUTPUT_PATH: './publish'      # Project Path Location default to root(.)
+  NETCORE_VERSION: "3.1.103"        # dot net core version
+  
+jobs:
+  build-and-deploy:
+    name: Build and Deploy
+    runs-on: windows-latest
+    defaults:
+      run:
+        working-directory: ./API/APIProject
+    steps:
+  # checkout the repo
+    - uses: actions/checkout@master  
+    - name: Set up dotnet Core ${{ env.NETCORE_VERSION }}
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: ${{ env.NETCORE_VERSION }}
+      
+    - name: Restore package
+      run: |
+        ls 
+        dotnet restore
+
+    - name: Build
+      run: |
+        ls 
+        dotnet build  --no-restore --configuration Release
+      
+      
+    - name: Publish
+      run: |
+        ls
+        dotnet publish --no-build --configuration Release --output ${{ env.WEBAPP_OUTPUT_PATH }} 
+
+    - name: Publish Artifacts of ${{ env.WEBAPP_NAME }}
+      uses: actions/upload-artifact@v1.0.0
+      with: 
+        name: webapp
+        path: ${{ env.WEBAPP_PACKAGE_PATH }}
+      
+        
+    - name: 'Deploy to Azure App Service [WEBAPP]'
+      uses: azure/webapps-deploy@v2
+      with: 
+        app-name: ${{ env.WEBAPP_NAME }}
+        publish-profile: ${{ secrets.APP_API_PROFILE  }} 
+        package: '${{ env.WEBAPP_PACKAGE_PATH }}'
