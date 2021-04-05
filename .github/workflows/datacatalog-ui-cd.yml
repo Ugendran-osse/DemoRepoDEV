@@ -24,6 +24,7 @@ jobs:
     defaults:
       run:
         working-directory: ./UI/UIApp/OsseUIApp  #Example: ./API/APIProject
+        
     steps:
       - uses: actions/checkout@v2
 
