@@ -19,7 +19,7 @@ env:
   
   
 jobs:
-  build-and-deploy:
+  build:
     name: Build and Deploy
     runs-on: windows-latest
     defaults:
@@ -35,6 +35,7 @@ jobs:
       - name: npm install, build, and test
         run: |
           ls
+          cd ui/uiapp/osseuiapp
           npm install
           ng build --prod 
           npm run test --if-present
