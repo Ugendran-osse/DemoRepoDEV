@@ -14,7 +14,7 @@
     "buildInfoAndClean": "npm run clean && npm run buildInfo",
     "build:dev": "npm run indexFileGeneration -- --env=dev && npm run buildInfoAndClean && ng build -c=dev",
     "build:qa": "npm run indexFileGeneration -- --env=qa && npm run buildInfoAndClean && ng build  -c=qa",
-    "build:prd": "npm run indexFileGeneration -- --env=prod && npm run buildInfoAndClean && ng build -c=production"
+    "build:prd": "npm run buildInfoAndClean && ng build -c=production"
   },
   "private": true,
   "dependencies": {
