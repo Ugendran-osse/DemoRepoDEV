@@ -24,6 +24,7 @@ namespace OsseAPIApp
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
+        //this will trigger API deployment
         public void ConfigureServices(IServiceCollection services)
         {
 
